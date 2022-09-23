@@ -35,6 +35,7 @@ for (@allID_dir){
 	my $ID = `basename $_`;# get basename of a path, currently for account name
 	chomp $ID;
 	`chown -R root: $_/$HW_dir`;#lock students' folder permission first
+	`chmod -R 755 $_/$HW_dir`;#Let students have permission to read and download
 	#`chown -R $ID: $_/$HW_dir`;#release students' folders permission
 	#die;
 	#system("ls $_/$HW_dir");
