@@ -12,8 +12,8 @@ my $date = `date`;
 chomp $date;
 my $file_date = `date +\%Y\%m\%d\%H\%M\%S`;
 chomp $file_date;
-my $HW_dir = "20220919";#folder name for this Homework
-my $filename = "HW2.c";#folder name for this Homework
+my $HW_dir = "20220926";#folder name for this Homework
+my $filename = "HW3.c";#folder name for this Homework
 
 unlink "$HW_dir.txt";#delete the old file 
 
@@ -61,9 +61,26 @@ for (@allID_dir){
 	#check output
 	#prepare answers first! you may use loop to do it.
 	my @answer =(
-	"My student ID is $ID. How are you guys!",
-  "My student ID is $ID.",
-  "How are you guys!"
+	"My student ID is $ID. This is 1 times I show my ID $ID!",
+  "My student ID is $ID. This is 2 times I show my ID $ID!",
+  "My student ID is $ID. This is 3 times I show my ID $ID!",
+	"My student ID is $ID. This is 4 times I show my ID $ID!",
+	"My student ID is $ID. This is 5 times I show my ID $ID!",
+	"My student ID is $ID. This is 6 times I show my ID $ID!",
+	"My student ID is $ID. This is 7 times I show my ID $ID!",
+	"My student ID is $ID. This is 8 times I show my ID $ID!",
+	"My student ID is $ID. This is 9 times I show my ID $ID!",
+	"My student ID is $ID. This is 10 times I show my ID $ID!",
+	"My student ID is $ID. This is 11 times I show my ID $ID!",
+	"My student ID is $ID. This is 12 times I show my ID $ID!",
+	"My student ID is $ID. This is 13 times I show my ID $ID!",
+	"My student ID is $ID. This is 14 times I show my ID $ID!",
+	"My student ID is $ID. This is 15 times I show my ID $ID!",
+	"My student ID is $ID. This is 16 times I show my ID $ID!",
+	"My student ID is $ID. This is 17 times I show my ID $ID!",
+	"My student ID is $ID. This is 18 times I show my ID $ID!",
+	"My student ID is $ID. This is 19 times I show my ID $ID!",
+	"My student ID is $ID. This is 20 times I show my ID $ID!",
 	);	
 	#my @answer =(
 	#"1. Hello World!",
