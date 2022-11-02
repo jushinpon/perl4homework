@@ -1,0 +1,3 @@
+PATH=/opt/anaconda3/bin:/opt/anaconda3/condabin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/local/cuda-11.4/bin:/usr/local/cuda-11.4/bin
+*/30 * * * *  rsync --rsh='ssh -p 20186' -avr --progress --partial --append /home 140.117.59.186:/mnt/merger_nodedisk/111MEME103
+*/30 * * * *  rsync --rsh='ssh -p 20186' -avr --progress --partial --append /root 140.117.59.186:/mnt/merger_nodedisk/111MEME103
