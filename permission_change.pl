@@ -8,7 +8,7 @@ use strict;
 use Cwd;
 
 my $currentPath = getcwd();
-my $HW_dir = "20221003";#folder name for this Homework
+my $HW_dir = "midterm";#folder name for this Homework
 my @allID_dir = `find /home  -maxdepth 1 -mindepth 1 -type d -name "*"|egrep "/B|/M"|sort`;#all folders with ID under /home
 
 chomp @allID_dir;
@@ -20,6 +20,6 @@ for (@allID_dir){
 	#`chown -R root: $_/$HW_dir`;#lock students' folder permission first
 	`chmod -R 750 $_/$HW_dir`;#Let students have permission to read and download
 	
-	`chown -R $ID: $_/$HW_dir`;#release students' folders permission
+	`chown -R root: $_/$HW_dir`;#release students' folders permission
 		
 }
