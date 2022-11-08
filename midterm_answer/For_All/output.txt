@@ -1,0 +1,4 @@
+sum: 5255 total: 10
+sum: 8983 total: 9
+sum: 19852 total: 14
+10343
