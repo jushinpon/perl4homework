@@ -7,17 +7,27 @@ use warnings;
 use strict;
 use Cwd;
 
+#setting some infomation
 my $currentPath = getcwd();
-my $date = `date`;
+my $date = `date`;#get date
 chomp $date;
-my $file_date = `date +\%Y\%m\%d\%H\%M\%S`;
+my $file_date = `date +\%Y\%m\%d\%H\%M\%S`;#get date with time
 chomp $file_date;
 
-my $answer_dir = "output4test";#folder name for all midterm output files
+my $answer_dir = "output4test";#folder name for all folders with output.txt
 my $groupInfo = "Group4test.txt";# group with all corresponding student IDs
 
 ####prepare answers here
+my @answer_dir = `find ./$answer_dir  -maxdepth 1 -mindepth 1 -type d -name "*"`;#all folders with the answer file (output.txt)
+chomp @answer_dir;
 my %answers;
+for (@answer_dir){
+	my $basename = `basename $_`;
+	my @answer = 
+	print "$_\n";
+}
+die;
+
 my @temp = `cat ../output4test/output_all.txt|grep -v '^\$'`;#remove blank
 chomp @temp;
   
