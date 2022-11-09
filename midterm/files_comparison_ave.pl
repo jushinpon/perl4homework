@@ -20,7 +20,7 @@ no strict 'refs';
 use Cwd;
 use utf8;
 
-my $score_over = 80;#
+my $score_over = 85;#
 #create keys 
 my %exam_dis;#exam distribution
 $exam_dis{For_All} = [];
@@ -159,10 +159,7 @@ for my $key (sort keys %exam_dis){
 						push @ifile, $if;
 					}					
 				}
-				#for my $i (@ifile){
-				#	print "$i\n";;
-				#}
-				#die;				
+								
 				my @jtemp = `cat $jfile`;
 				chomp @jtemp;
 				my @jfile1 = grep (($_!~m{^\s*$|^\s*\/\/|^\s*#|main}),@jtemp);
@@ -176,29 +173,17 @@ for my $key (sort keys %exam_dis){
 					if($if ne ""){
 						push @jfile, $if;
 					}					
-				}
-				
-				#for (@jfile){
-				#	print $_."\n";;
-				#}
-				#die;
-				
+				}				
+# j to i check				
 				my %ifile = map {$_ => 1} @ifile;
 				
 				my @keys = keys %ifile;
-				my $allNo = @keys;
-				#for (@keys){
-				#	print $_. "\n";
-				#}
-				#
-				#die;
+				my $allNo = @keys;				
 				my $score = 0;
 				my @dup;
 				for my $dup (@jfile){
 					 chomp $dup;
-					 if (exists $ifile{$dup}){
-						 #print "For check1: $dup\n";
-						 #print "For check2: $ifile{$dup}\n";
+					 if (exists $ifile{$dup}){						 
 						 $score++;
 						 push @dup, $dup;
 					 };
@@ -208,23 +193,61 @@ for my $key (sort keys %exam_dis){
 					$score = "NaN";
 				}
 				else{
-					print "check: $score,$allNo\n";
+					#print "check: $score,$allNo\n";
 					$score = (($score)/$allNo)*100.0;
 					if ($score > 100){$score= 100.0;}
 				}
+				#print "1.\$score: $score\n";
+# i to j check
+				my %jfile = map {$_ => 1} @jfile;
 				
+				my @jkeys = keys %jfile;
+				my $jallNo = @jkeys;				
+				my $jscore = 0;
+				my @jdup;
+				for my $dup (@ifile){
+					 chomp $dup;
+					 if (exists $jfile{$dup}){						 
+						 $jscore++;
+						 push @jdup, $dup;
+					 };
+				}
 				
-				if($score > $score_over){
+				if($jallNo == 0){
+					$jscore = "NaN";
+				}
+				else{
+					#print "check: $score,$allNo\n";
+					$jscore = (($jscore)/$jallNo)*100.0;
+					if ($jscore > 100){$jscore= 100.0;}
+				}
+
+# end i to j check				
+				#print "2.\$score: $score\n";
+				
+				if($score > $score_over and $jscore > $score_over){
 					#print "$exam_dis{$key}->[$i] and $exam_dis{$key}->[$j] with Similarity $score%\n";
-					`echo "****$exam_dis{$key}->[$i] and $exam_dis{$key}->[$j]****, $score%" >> ./summary.txt`;
+					my $temp = ($score + $jscore)/2.0;
+					$score = sprintf("%.2f", $score);
+					$jscore = sprintf("%.2f", $jscore);
+					$temp = sprintf("%.2f", $temp);
+					`echo "****$exam_dis{$key}->[$i] and $exam_dis{$key}->[$j]****, $score%, $jscore%, average => $temp%" >> ./summary.txt`;
 					#die;
-					my $c1 = 0;
-					for my $d (@dup){
-						chomp $d;
-						$c1++;
-						`echo '$c1 $d' >> ./summary.txt`;						
-					}
-					`echo '' >> ./summary.txt`;										
+					#`echo '+++j to i file comparision' >> ./summary.txt`;
+					#my $c1 = 0;
+					#for my $d (@dup){
+					#	chomp $d;
+					#	$c1++;
+					#	`echo '$c1 $d' >> ./summary.txt`;						
+					#}
+					#`echo '+++i to j file comparision' >> ./summary.txt`;
+					#my $c2 = 0;
+					#for my $d (@jdup){
+					#	chomp $d;
+					#	$c2++;
+					#	`echo '$c2 $d' >> ./summary.txt`;						
+					#}
+					#`echo '' >> ./summary.txt`;										
 				}
 				
 			#}#do
