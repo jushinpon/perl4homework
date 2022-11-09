@@ -12,7 +12,7 @@ my $date = `date`;
 chomp $date;
 my $file_date = `date +\%Y\%m\%d\%H\%M\%S`;
 chomp $file_date;
-my $HW_dir = "20221024";#folder name for this Homework
+my $HW_dir = "20221019";#folder name for this Homework
 my $filename = "HW5.c";#folder name for this Homework
 
 unlink "$HW_dir.txt";#delete the old file 
@@ -158,7 +158,7 @@ for (@allID_dir){
 "46 -0.432178",
 
 "47 -0.992335",
-
+"",
 "48 -0.640144",
 
 "49 0.300593",
@@ -168,7 +168,7 @@ for (@allID_dir){
 "51 0.742154",
 
 "52 -0.162991",
-
+"",
 "53 -0.918283",
 
 "54 -0.829310",
@@ -198,7 +198,7 @@ for (@allID_dir){
 "66 -0.999647",
 
 "67 -0.517770",
-
+"",
 "68 0.440143",
 
 "69 0.993390",

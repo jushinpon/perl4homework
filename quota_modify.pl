@@ -2,7 +2,7 @@ use strict;
 use warnings;
 my $soft = "1024M";
 my $hard = "1048M";
-my @accounts = `xfs_quota -x -c "report -ubh" /home|egrep "^B|^M"|awk '{print \$1}'`;
+my @accounts = `xfs_quota -x -c "report -ubh" /home|egrep "^B1|^B0|^M"|awk '{print \$1}'`;
 chomp @accounts;
 for (@accounts){
 	#print "$_\n";
