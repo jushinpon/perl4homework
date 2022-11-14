@@ -24,7 +24,7 @@ my $score_over = 85;#
 #create keys 
 my %exam_dis;#exam distribution
 $exam_dis{For_All} = [];
-for (1..5){
+for (1..6){
 	chomp;
 	my $temp = "group_"."$_";
 	$exam_dis{$temp} = [];
