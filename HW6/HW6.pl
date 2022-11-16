@@ -4,8 +4,12 @@ chown -R user: folder     --> change permission when you are grading
 =cut
 
 use warnings;
+use DateTime;
 use strict;
+no strict 'refs';
 use Cwd;
+use utf8;
+
 
 my $currentPath = getcwd();
 my $date = `date`;
@@ -17,25 +21,53 @@ my $filename = "HW6.c";#folder name for this Homework
 
 unlink "$HW_dir.txt";#delete the old file 
 
-my @allID_dir = `find /home  -maxdepth 1 -mindepth 1 -type d -name "*"|egrep "/B|/M"|sort`;#all folders with ID under /home
+#check account usage time
+my $dt = DateTime->new( year => 2022, month => 10, day => 01, hour => 16, minute => 11,
+	second => 0, nanosecond => 500000000, time_zone => 'Asia/Taipei' );
+my $account_check  = $dt->epoch;
+
+my @temp_dir = `find /home  -maxdepth 1 -mindepth 1 -type d -name "*"|grep -v "Ben"|egrep "/B|/M"|sort`;#all folders with ID under /home
 #my @allID_dir = `find /home  -maxdepth 1 -mindepth 1 -type d -name "*"|egrep "jsp"|sort`;#all folders with ID under /home
-chomp @allID_dir;
+chomp @temp_dir;
+my @all_accountpaths;
+#get all accounts
+for (@temp_dir){
+	#print "$_ \n";
+	#my $check = `stat -c ‘%y’ $_`;
+	my $check = (stat($_))[9];
+	chomp $check;
+	#print "$check, $account_check\n";
+	
+	if($check > $account_check){
+		chomp $_;
+		push @all_accountpaths,$_;
+	}
+	else
+	{
+		my $temp = `basename $_`;# get basename of a path
+		chomp $temp;
+		my $dt = DateTime->from_epoch(epoch => $check);#epoch time to date
+        my $date = $dt->ymd;#strftime('%Y-%s');
+		#print "****The last date account has modified things is $date. $temp has no one to use it currently.\n";
+	}	
+}
+
 my @all_accounts;
 
 #get all accounts
-for (@allID_dir){
+for (@all_accountpaths){
 	#print "$_ \n";
 	my $temp = `basename $_`;# get basename of a path
 	chomp $temp;
 	push @all_accounts,$_;	
 }
-
+#die;
 #grading and make the report
-for (@allID_dir){
+for (@all_accountpaths){
 	my $ID = `basename $_`;# get basename of a path, currently for account name
 	chomp $ID;
 	`chown -R root: $_/$HW_dir`;#lock students' folder permission first
-	`chmod -R 755 $_/$HW_dir`;#Let students have permission to read and download
+	`chmod -R 750 $_/$HW_dir`;#Let students have permission to read and download
 	#`chown -R $ID: $_/$HW_dir`;#release students' folders permission
 	#die;
 	#system("ls $_/$HW_dir");
@@ -51,7 +83,19 @@ for (@allID_dir){
 	`touch $HW_dir-report_$file_date.txt`;
 	`echo "$date" >> $HW_dir-report_$file_date.txt`;
 	`echo "" >> $HW_dir-report_$file_date.txt`;
-	####compile their code	
+	####compile their code
+	print "current path: $_/$HW_dir\n";	
+	
+######	For Halting problem
+	if($ID eq "B113022030"){#gcc gets error!
+		`echo "Halting problem (endless loop)!" >> $HW_dir-report_$file_date.txt`;
+		next;
+	}
+#####
+	if(-z $filename){#gcc gets error!
+		`echo "empty file!" >> $HW_dir-report_$file_date.txt`;		
+		next;
+	}	
 	system("gcc -o grade.x $filename -lm");
 	if($?){#gcc gets error!
 		`echo "gcc compiling failed!" >> $HW_dir-report_$file_date.txt`;
@@ -102,7 +146,7 @@ unlink "summary_$file_date.txt";
 `echo "$date" >> summary_$file_date.txt`;
 `echo "ID Result" >> summary_$file_date.txt`;
 `echo "" >> summary_$file_date.txt`;
-for (@allID_dir){
+for (@all_accountpaths){
 	my $ID = `basename $_`;# get basename of a path, currently for account name
 	chomp $ID;
 	my $temp = 0;
