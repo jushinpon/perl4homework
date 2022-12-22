@@ -12,11 +12,7 @@ my $date = `date`;
 chomp $date;
 my $file_date = `date +\%Y\%m\%d\%H\%M\%S`;
 chomp $file_date;
-<<<<<<< HEAD
 my $HW_dir = "20221109_2";#folder name for this Homework
-=======
-my $HW_dir = "20221107_2";#folder name for this Homework
->>>>>>> 73272c26b2f2187cc5ad51c277149c24ec99133c
 my $filename = "HW7.c";#folder name for this Homework
 
 unlink "$HW_dir.txt";#delete the old file 
