@@ -16,7 +16,7 @@ my $adduser = "yes";
 my $setsmb = "no";# you need to install 
 #modify /etc/fatab for /home first
 #,usrquota,grpquota then mount -a -o remount
-my $setquota = "yes"; my $quota = "1.2";#use df -h to check first
+my $setquota = "yes"; my $quota = "1.0";#use df -h to check first
 my $bsoft = int(1024*$quota)."M"; my $bhard = int(1024*$quota + 50)."M";
 
 open my $ss,"< ./username.dat" or die "No Server_setting.dat to open.\n $!";#one line for an username
