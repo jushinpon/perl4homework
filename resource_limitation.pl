@@ -29,8 +29,8 @@ for (@user_accounts){
 
 my $string = "
 Please open /etc/security/limits.conf and paste the following into it:
-\@student hard cpu 15
-\@student hard memory 30M
+\@students hard cpu 15
+\@students hard memory 30M
 ";
 print "$string\n";
 
