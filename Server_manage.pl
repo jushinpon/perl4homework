@@ -23,7 +23,7 @@ open my $ss,"< ./username.dat" or die "No Server_setting.dat to open.\n $!";#one
 my @temp_array = <$ss>;
 close $ss; 
 my @user_accounts = grep (($_!~m{^\s*$|^#}),@temp_array); # remove blank lines
-
+map { s/^\s+|\s+$//g; } @user_accounts;
 print "all new accounts:\n @user_accounts\n";
 sleep(3);
 #print "yes or no\n";
@@ -37,7 +37,7 @@ if($adduser eq "yes"){
     for my $new (@user_accounts){
         chomp $new;
         system("ps aux|grep -v grep|grep -v root|grep $new|awk '{print \$2}'|xargs kill");
-        #system("userdel -r $new");#-r flag to remove everything 
+        system("userdel -r $new");#-r flag to remove everything 
         system("rm -rf /home/$new"); 
         system("rm -rf /var/spool/mail/$new"); 
         system("useradd $new");
