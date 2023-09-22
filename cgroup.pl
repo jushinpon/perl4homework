@@ -32,8 +32,8 @@ use strict;
 use warnings;
 #`yum install libcgroup`;
 #resource you want to control for UID
-my $CPUQuota= '5%';#allowed max cpu usage 
-my $MemoryMax= '100M'; #allowed max ram usage = 20%
+my $CPUQuota= '20%';#allowed max cpu usage 
+my $MemoryMax= '50M'; #allowed max ram usage = 20%
 my $TasksMax= 10;
 my $TasksMaxLimit= 10;# max task number
 my $BlockIOMax= "5M";#diso io per second
@@ -68,7 +68,7 @@ for my $uid (@UID) {
   #`systemctl disable $hash_para{output_file}`;
   #`systemctl stop $hash_para{output_file}`;
   #`systemctl daemon-reload`;
-
+  
   `systemctl enable $hash_para{output_file}`;
   `systemctl start $hash_para{output_file}`;
 #  unlink "$hash_para{output_file}";   
@@ -88,7 +88,6 @@ WantedBy=multi-user.target
 
 [Slice]
 CPUAccounting=yes
-CPUShare=256
 CPUQuota=$para_hr->{CPUQuota}
 MemoryAccounting=yes
 MemoryMax=$para_hr->{MemoryMax}

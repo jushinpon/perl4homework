@@ -12,18 +12,18 @@ if not works, you need to reboot
 use strict;
 use warnings;
 use Expect;
-my $adduser = "yes";
-my $setsmb = "no";# you need to install 
+my $adduser = "no";
+my $setsmb = "yes";# you need to install 
 #modify /etc/fatab for /home first
 #,usrquota,grpquota then mount -a -o remount
-my $setquota = "yes"; my $quota = "1.0";#use df -h to check first
+my $setquota = "no"; my $quota = "1.0";#use df -h to check first
 my $bsoft = int(1024*$quota)."M"; my $bhard = int(1024*$quota + 50)."M";
 
 open my $ss,"< ./username.dat" or die "No Server_setting.dat to open.\n $!";#one line for an username
 my @temp_array = <$ss>;
 close $ss; 
 my @user_accounts = grep (($_!~m{^\s*$|^#}),@temp_array); # remove blank lines
-
+map { s/^\s+|\s+$//g; } @user_accounts;
 print "all new accounts:\n @user_accounts\n";
 sleep(3);
 #print "yes or no\n";
@@ -45,6 +45,8 @@ if($adduser eq "yes"){
         system("chage -d 0 $new");#force new user to change their passwd after first login
     }
 }
+
+
 sleep(1);
 #samba setting
 if($setsmb eq "yes"){
