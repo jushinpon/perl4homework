@@ -52,7 +52,7 @@ system("touch $ConfPath");
 	workgroup = SAMBA
 	netbios name = $netbios_name
 	server string = SAMBA SERVER	 
-	security = user
+	#security = user
 	unix extensions = no' >> $ConfPath
 `;
 #Home dir setting	
