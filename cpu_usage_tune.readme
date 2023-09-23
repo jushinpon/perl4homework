@@ -1,0 +1,39 @@
+Check all users with a long username
+
+ps axo user:20,pid,pcpu,pmem,vsz,rss,tty,stat,start,time,comm
+
+
+
+To umount swap for a Rocky Linux 8 server, you can use the following steps:
+
+Open a terminal window.
+Run the following command to list all mounted swap devices:
+swapon -s
+Identify the swap device that you want to umount.
+Run the following command to umount the swap device:
+swapoff -v <swap_device>
+Replace <swap_device> with the name of the swap device that you want to umount.
+
+For example, to umount the swap device /dev/sda5, you would run the following command:
+
+swapoff -v /dev/sda5
+Once you have umounted the swap device, you can verify that it is no longer mounted by running the following command:
+
+swapon -s
+If the swap device is no longer listed, then it has been successfully umounted.
+
+
+export PATH="/opt/anaconda3/bin:$PATH" in /etc/bashrc first
+
+1. not activate conda automaticlly for each user. use "source activate base"
+
+2 then deactivate conda 
+
+
+add the following into /etc/bashrc
+
+TMOUT=3600
+readonly TMOUT
+export TMOUT
+
+
